@@ -3,7 +3,7 @@
 
 # provider-ovh-api
 
-Kubeform CRDs for [Terraform Ovh Provider](https://github.com/ovh/terraform-provider-ovh)
+Kubeform CRDs for [Terraform OVH Provider](https://github.com/ovh/terraform-provider-ovh)
 
 ## Installation
 
