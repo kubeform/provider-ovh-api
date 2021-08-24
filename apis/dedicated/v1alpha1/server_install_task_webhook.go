@@ -20,9 +20,12 @@ package v1alpha1
 
 import (
 	"fmt"
+	"strings"
 
 	base "kubeform.dev/apimachinery/api/v1alpha1"
+	"kubeform.dev/apimachinery/pkg/util"
 
+	jsoniter "github.com/json-iterator/go"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
@@ -38,6 +41,25 @@ func (r *ServerInstallTask) SetupWebhookWithManager(mgr ctrl.Manager) error {
 
 var _ webhook.Validator = &ServerInstallTask{}
 
+var serverinstalltaskForceNewList = map[string]bool{
+	"/details/*/custom_hostname":                 true,
+	"/details/*/disk_group_id":                   true,
+	"/details/*/install_rtm":                     true,
+	"/details/*/install_sql_server":              true,
+	"/details/*/language":                        true,
+	"/details/*/no_raid":                         true,
+	"/details/*/post_installation_script_link":   true,
+	"/details/*/post_installation_script_return": true,
+	"/details/*/reset_hw_raid":                   true,
+	"/details/*/soft_raid_devices":               true,
+	"/details/*/ssh_key_name":                    true,
+	"/details/*/use_distrib_kernel":              true,
+	"/details/*/use_spla":                        true,
+	"/partition_scheme_name":                     true,
+	"/service_name":                              true,
+	"/template_name":                             true,
+}
+
 // ValidateCreate implements webhook.Validator so a webhook will be registered for the type
 func (r *ServerInstallTask) ValidateCreate() error {
 	return nil
@@ -45,6 +67,53 @@ func (r *ServerInstallTask) ValidateCreate() error {
 
 // ValidateUpdate implements webhook.Validator so a webhook will be registered for the type
 func (r *ServerInstallTask) ValidateUpdate(old runtime.Object) error {
+	if r.Spec.Resource.ID == "" {
+		return nil
+	}
+	newObj := r.Spec.Resource
+	res := old.(*ServerInstallTask)
+	oldObj := res.Spec.Resource
+
+	jsnitr := jsoniter.Config{
+		EscapeHTML:             true,
+		SortMapKeys:            true,
+		TagKey:                 "tf",
+		ValidateJsonRawMessage: true,
+		TypeEncoders:           GetEncoder(),
+		TypeDecoders:           GetDecoder(),
+	}.Froze()
+
+	byteNew, err := jsnitr.Marshal(newObj)
+	if err != nil {
+		return err
+	}
+	tempNew := make(map[string]interface{})
+	err = jsnitr.Unmarshal(byteNew, &tempNew)
+	if err != nil {
+		return err
+	}
+
+	byteOld, err := jsnitr.Marshal(oldObj)
+	if err != nil {
+		return err
+	}
+	tempOld := make(map[string]interface{})
+	err = jsnitr.Unmarshal(byteOld, &tempOld)
+	if err != nil {
+		return err
+	}
+
+	for key := range serverinstalltaskForceNewList {
+		keySplit := strings.Split(key, "/*")
+		length := len(keySplit)
+		checkIfAnyDif := false
+		util.CheckIfAnyDifference("", keySplit, 0, length, &checkIfAnyDif, tempOld, tempOld, tempNew)
+		util.CheckIfAnyDifference("", keySplit, 0, length, &checkIfAnyDif, tempNew, tempOld, tempNew)
+
+		if checkIfAnyDif && r.Spec.UpdatePolicy == base.UpdatePolicyDoNotDestroy {
+			return fmt.Errorf(`serverinstalltask "%v/%v" immutable field can't be updated. To update, change spec.updatePolicy to Destroy`, r.Namespace, r.Name)
+		}
+	}
 	return nil
 }
 
