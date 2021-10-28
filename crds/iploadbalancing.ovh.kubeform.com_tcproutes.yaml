@@ -5,14 +5,14 @@ metadata:
   labels:
     app.kubernetes.io/name: ovh.kubeform.com
     app.kubernetes.io/part-of: kubeform.com
-  name: httproutes.iploadbalancing.ovh.kubeform.com
+  name: tcproutes.iploadbalancing.ovh.kubeform.com
 spec:
   group: iploadbalancing.ovh.kubeform.com
   names:
-    kind: HttpRoute
-    listKind: HttpRouteList
-    plural: httproutes
-    singular: httproute
+    kind: TcpRoute
+    listKind: TcpRouteList
+    plural: tcproutes
+    singular: tcproute
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
@@ -60,15 +60,8 @@ spec:
                   action:
                     description: Action triggered when all rules match
                     properties:
-                      status:
-                        description: HTTP status code for "redirect" and "reject"
-                          actions
-                        format: int64
-                        type: integer
                       target:
-                        description: Farm ID for "farm" action type or URL template
-                          for "redirect" action. You may use ${uri}, ${protocol},
-                          ${host}, ${port} and ${path} variables in redirect target
+                        description: Farm ID for "farm" action type, empty for others
                         type: string
                       type:
                         description: Action to trigger if all the rules of this route
@@ -138,15 +131,8 @@ spec:
                   action:
                     description: Action triggered when all rules match
                     properties:
-                      status:
-                        description: HTTP status code for "redirect" and "reject"
-                          actions
-                        format: int64
-                        type: integer
                       target:
-                        description: Farm ID for "farm" action type or URL template
-                          for "redirect" action. You may use ${uri}, ${protocol},
-                          ${host}, ${port} and ${path} variables in redirect target
+                        description: Farm ID for "farm" action type, empty for others
                         type: string
                       type:
                         description: Action to trigger if all the rules of this route

@@ -37,6 +37,8 @@ type IploadbalancingV1alpha1Interface interface {
 	TcpFarmsGetter
 	TcpFarmServersGetter
 	TcpFrontendsGetter
+	TcpRoutesGetter
+	TcpRouteRulesGetter
 	VrackNetworksGetter
 }
 
@@ -83,6 +85,14 @@ func (c *IploadbalancingV1alpha1Client) TcpFarmServers(namespace string) TcpFarm
 
 func (c *IploadbalancingV1alpha1Client) TcpFrontends(namespace string) TcpFrontendInterface {
 	return newTcpFrontends(c, namespace)
+}
+
+func (c *IploadbalancingV1alpha1Client) TcpRoutes(namespace string) TcpRouteInterface {
+	return newTcpRoutes(c, namespace)
+}
+
+func (c *IploadbalancingV1alpha1Client) TcpRouteRules(namespace string) TcpRouteRuleInterface {
+	return newTcpRouteRules(c, namespace)
 }
 
 func (c *IploadbalancingV1alpha1Client) VrackNetworks(namespace string) VrackNetworkInterface {

@@ -38,4 +38,8 @@ type TcpFarmServerExpansion interface{}
 
 type TcpFrontendExpansion interface{}
 
+type TcpRouteExpansion interface{}
+
+type TcpRouteRuleExpansion interface{}
+
 type VrackNetworkExpansion interface{}

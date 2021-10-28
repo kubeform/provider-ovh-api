@@ -5,14 +5,14 @@ metadata:
   labels:
     app.kubernetes.io/name: ovh.kubeform.com
     app.kubernetes.io/part-of: kubeform.com
-  name: projectnetworkprivates.cloud.ovh.kubeform.com
+  name: tcprouterules.iploadbalancing.ovh.kubeform.com
 spec:
-  group: cloud.ovh.kubeform.com
+  group: iploadbalancing.ovh.kubeform.com
   names:
-    kind: ProjectNetworkPrivate
-    listKind: ProjectNetworkPrivateList
-    plural: projectnetworkprivates
-    singular: projectnetworkprivate
+    kind: TcpRouteRule
+    listKind: TcpRouteRuleList
+    plural: tcprouterules
+    singular: tcprouterule
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
@@ -57,104 +57,54 @@ spec:
                 type: object
               resource:
                 properties:
+                  displayName:
+                    type: string
+                  field:
+                    type: string
                   id:
                     type: string
-                  name:
+                  match:
                     type: string
-                  regions:
-                    description: Deprecated
-                    items:
-                      type: string
-                    type: array
-                  regionsAttributes:
-                    items:
-                      properties:
-                        openstackid:
-                          type: string
-                        region:
-                          type: string
-                        status:
-                          type: string
-                      required:
-                      - status
-                      type: object
-                    type: array
-                  regionsStatus:
-                    description: Deprecated
-                    items:
-                      properties:
-                        region:
-                          type: string
-                        status:
-                          type: string
-                      required:
-                      - status
-                      type: object
-                    type: array
+                  negate:
+                    type: boolean
+                  pattern:
+                    type: string
+                  routeID:
+                    type: string
                   serviceName:
-                    description: Service name of the resource representing the id
-                      of the cloud project.
                     type: string
-                  status:
+                  subField:
                     type: string
-                  type:
-                    type: string
-                  vlanID:
-                    format: int64
-                    type: integer
                 required:
-                - name
+                - field
+                - match
+                - routeID
                 - serviceName
                 type: object
               state:
                 properties:
+                  displayName:
+                    type: string
+                  field:
+                    type: string
                   id:
                     type: string
-                  name:
+                  match:
                     type: string
-                  regions:
-                    description: Deprecated
-                    items:
-                      type: string
-                    type: array
-                  regionsAttributes:
-                    items:
-                      properties:
-                        openstackid:
-                          type: string
-                        region:
-                          type: string
-                        status:
-                          type: string
-                      required:
-                      - status
-                      type: object
-                    type: array
-                  regionsStatus:
-                    description: Deprecated
-                    items:
-                      properties:
-                        region:
-                          type: string
-                        status:
-                          type: string
-                      required:
-                      - status
-                      type: object
-                    type: array
+                  negate:
+                    type: boolean
+                  pattern:
+                    type: string
+                  routeID:
+                    type: string
                   serviceName:
-                    description: Service name of the resource representing the id
-                      of the cloud project.
                     type: string
-                  status:
+                  subField:
                     type: string
-                  type:
-                    type: string
-                  vlanID:
-                    format: int64
-                    type: integer
                 required:
-                - name
+                - field
+                - match
+                - routeID
                 - serviceName
                 type: object
               terminationPolicy:

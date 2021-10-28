@@ -98,6 +98,22 @@ type TcpFrontendListerExpansion interface{}
 // TcpFrontendNamespaceLister.
 type TcpFrontendNamespaceListerExpansion interface{}
 
+// TcpRouteListerExpansion allows custom methods to be added to
+// TcpRouteLister.
+type TcpRouteListerExpansion interface{}
+
+// TcpRouteNamespaceListerExpansion allows custom methods to be added to
+// TcpRouteNamespaceLister.
+type TcpRouteNamespaceListerExpansion interface{}
+
+// TcpRouteRuleListerExpansion allows custom methods to be added to
+// TcpRouteRuleLister.
+type TcpRouteRuleListerExpansion interface{}
+
+// TcpRouteRuleNamespaceListerExpansion allows custom methods to be added to
+// TcpRouteRuleNamespaceLister.
+type TcpRouteRuleNamespaceListerExpansion interface{}
+
 // VrackNetworkListerExpansion allows custom methods to be added to
 // VrackNetworkLister.
 type VrackNetworkListerExpansion interface{}

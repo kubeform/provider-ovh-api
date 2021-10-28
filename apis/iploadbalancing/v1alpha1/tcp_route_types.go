@@ -34,25 +34,22 @@ import (
 // +kubebuilder:subresource:status
 // +kubebuilder:printcolumn:name="Phase",type=string,JSONPath=`.status.phase`
 
-type HttpRoute struct {
+type TcpRoute struct {
 	metav1.TypeMeta   `json:",inline,omitempty"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              HttpRouteSpec   `json:"spec,omitempty"`
-	Status            HttpRouteStatus `json:"status,omitempty"`
+	Spec              TcpRouteSpec   `json:"spec,omitempty"`
+	Status            TcpRouteStatus `json:"status,omitempty"`
 }
 
-type HttpRouteSpecAction struct {
-	// HTTP status code for "redirect" and "reject" actions
-	// +optional
-	Status *int64 `json:"status,omitempty" tf:"status"`
-	// Farm ID for "farm" action type or URL template for "redirect" action. You may use ${uri}, ${protocol}, ${host}, ${port} and ${path} variables in redirect target
+type TcpRouteSpecAction struct {
+	// Farm ID for "farm" action type, empty for others
 	// +optional
 	Target *string `json:"target,omitempty" tf:"target"`
 	// Action to trigger if all the rules of this route matches
 	Type *string `json:"type" tf:"type"`
 }
 
-type HttpRouteSpecRules struct {
+type TcpRouteSpecRules struct {
 	// Name of the field to match like "protocol" or "host". See "/ipLoadbalancing/{serviceName}/route/availableRules" for a list of available rules
 	// +optional
 	Field *string `json:"field,omitempty" tf:"field"`
@@ -73,10 +70,10 @@ type HttpRouteSpecRules struct {
 	SubField *string `json:"subField,omitempty" tf:"sub_field"`
 }
 
-type HttpRouteSpec struct {
-	State *HttpRouteSpecResource `json:"state,omitempty" tf:"-"`
+type TcpRouteSpec struct {
+	State *TcpRouteSpecResource `json:"state,omitempty" tf:"-"`
 
-	Resource HttpRouteSpecResource `json:"resource" tf:"resource"`
+	Resource TcpRouteSpecResource `json:"resource" tf:"resource"`
 
 	UpdatePolicy base.UpdatePolicy `json:"updatePolicy,omitempty" tf:"-"`
 
@@ -87,11 +84,11 @@ type HttpRouteSpec struct {
 	BackendRef *core.LocalObjectReference `json:"backendRef,omitempty" tf:"-"`
 }
 
-type HttpRouteSpecResource struct {
+type TcpRouteSpecResource struct {
 	ID string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// Action triggered when all rules match
-	Action *HttpRouteSpecAction `json:"action" tf:"action"`
+	Action *TcpRouteSpecAction `json:"action" tf:"action"`
 	// Human readable name for your route, this field is for you
 	// +optional
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name"`
@@ -100,7 +97,7 @@ type HttpRouteSpecResource struct {
 	FrontendID *int64 `json:"frontendID,omitempty" tf:"frontend_id"`
 	// List of rules to match to trigger action
 	// +optional
-	Rules []HttpRouteSpecRules `json:"rules,omitempty" tf:"rules"`
+	Rules []TcpRouteSpecRules `json:"rules,omitempty" tf:"rules"`
 	// The internal name of your IP load balancing
 	ServiceName *string `json:"serviceName" tf:"service_name"`
 	// Route status. Routes in "ok" state are ready to operate
@@ -111,7 +108,7 @@ type HttpRouteSpecResource struct {
 	Weight *int64 `json:"weight,omitempty" tf:"weight"`
 }
 
-type HttpRouteStatus struct {
+type TcpRouteStatus struct {
 	// Resource generation, which is updated on mutation by the API Server.
 	// +optional
 	ObservedGeneration int64 `json:"observedGeneration,omitempty"`
@@ -124,10 +121,10 @@ type HttpRouteStatus struct {
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 // +kubebuilder:object:root=true
 
-// HttpRouteList is a list of HttpRoutes
-type HttpRouteList struct {
+// TcpRouteList is a list of TcpRoutes
+type TcpRouteList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	// Items is a list of HttpRoute CRD objects
-	Items []HttpRoute `json:"items,omitempty"`
+	// Items is a list of TcpRoute CRD objects
+	Items []TcpRoute `json:"items,omitempty"`
 }

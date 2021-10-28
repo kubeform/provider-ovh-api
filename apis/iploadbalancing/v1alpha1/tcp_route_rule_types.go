@@ -34,31 +34,17 @@ import (
 // +kubebuilder:subresource:status
 // +kubebuilder:printcolumn:name="Phase",type=string,JSONPath=`.status.phase`
 
-type ProjectNetworkPrivate struct {
+type TcpRouteRule struct {
 	metav1.TypeMeta   `json:",inline,omitempty"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              ProjectNetworkPrivateSpec   `json:"spec,omitempty"`
-	Status            ProjectNetworkPrivateStatus `json:"status,omitempty"`
+	Spec              TcpRouteRuleSpec   `json:"spec,omitempty"`
+	Status            TcpRouteRuleStatus `json:"status,omitempty"`
 }
 
-type ProjectNetworkPrivateSpecRegionsAttributes struct {
-	// +optional
-	Openstackid *string `json:"openstackid,omitempty" tf:"openstackid"`
-	// +optional
-	Region *string `json:"region,omitempty" tf:"region"`
-	Status *string `json:"status" tf:"status"`
-}
+type TcpRouteRuleSpec struct {
+	State *TcpRouteRuleSpecResource `json:"state,omitempty" tf:"-"`
 
-type ProjectNetworkPrivateSpecRegionsStatus struct {
-	// +optional
-	Region *string `json:"region,omitempty" tf:"region"`
-	Status *string `json:"status" tf:"status"`
-}
-
-type ProjectNetworkPrivateSpec struct {
-	State *ProjectNetworkPrivateSpecResource `json:"state,omitempty" tf:"-"`
-
-	Resource ProjectNetworkPrivateSpecResource `json:"resource" tf:"resource"`
+	Resource TcpRouteRuleSpecResource `json:"resource" tf:"resource"`
 
 	UpdatePolicy base.UpdatePolicy `json:"updatePolicy,omitempty" tf:"-"`
 
@@ -69,29 +55,24 @@ type ProjectNetworkPrivateSpec struct {
 	BackendRef *core.LocalObjectReference `json:"backendRef,omitempty" tf:"-"`
 }
 
-type ProjectNetworkPrivateSpecResource struct {
+type TcpRouteRuleSpecResource struct {
 	ID string `json:"id,omitempty" tf:"id,omitempty"`
 
-	Name *string `json:"name" tf:"name"`
 	// +optional
-	// Deprecated
-	Regions []string `json:"regions,omitempty" tf:"regions"`
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name"`
+	Field       *string `json:"field" tf:"field"`
+	Match       *string `json:"match" tf:"match"`
 	// +optional
-	RegionsAttributes []ProjectNetworkPrivateSpecRegionsAttributes `json:"regionsAttributes,omitempty" tf:"regions_attributes"`
+	Negate *bool `json:"negate,omitempty" tf:"negate"`
 	// +optional
-	// Deprecated
-	RegionsStatus []ProjectNetworkPrivateSpecRegionsStatus `json:"regionsStatus,omitempty" tf:"regions_status"`
-	// Service name of the resource representing the id of the cloud project.
+	Pattern     *string `json:"pattern,omitempty" tf:"pattern"`
+	RouteID     *string `json:"routeID" tf:"route_id"`
 	ServiceName *string `json:"serviceName" tf:"service_name"`
 	// +optional
-	Status *string `json:"status,omitempty" tf:"status"`
-	// +optional
-	Type *string `json:"type,omitempty" tf:"type"`
-	// +optional
-	VlanID *int64 `json:"vlanID,omitempty" tf:"vlan_id"`
+	SubField *string `json:"subField,omitempty" tf:"sub_field"`
 }
 
-type ProjectNetworkPrivateStatus struct {
+type TcpRouteRuleStatus struct {
 	// Resource generation, which is updated on mutation by the API Server.
 	// +optional
 	ObservedGeneration int64 `json:"observedGeneration,omitempty"`
@@ -104,10 +85,10 @@ type ProjectNetworkPrivateStatus struct {
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 // +kubebuilder:object:root=true
 
-// ProjectNetworkPrivateList is a list of ProjectNetworkPrivates
-type ProjectNetworkPrivateList struct {
+// TcpRouteRuleList is a list of TcpRouteRules
+type TcpRouteRuleList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	// Items is a list of ProjectNetworkPrivate CRD objects
-	Items []ProjectNetworkPrivate `json:"items,omitempty"`
+	// Items is a list of TcpRouteRule CRD objects
+	Items []TcpRouteRule `json:"items,omitempty"`
 }
