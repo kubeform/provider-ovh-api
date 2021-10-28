@@ -31,6 +31,7 @@ func GetEncoder() map[string]jsoniter.ValEncoder {
 		jsoniter.MustGetKind(reflect2.TypeOf(HttpFarmSpecProbe{}).Type1()):       HttpFarmSpecProbeCodec{},
 		jsoniter.MustGetKind(reflect2.TypeOf(HttpRouteSpecAction{}).Type1()):     HttpRouteSpecActionCodec{},
 		jsoniter.MustGetKind(reflect2.TypeOf(TcpFarmSpecProbe{}).Type1()):        TcpFarmSpecProbeCodec{},
+		jsoniter.MustGetKind(reflect2.TypeOf(TcpRouteSpecAction{}).Type1()):      TcpRouteSpecActionCodec{},
 	}
 }
 
@@ -40,6 +41,7 @@ func GetDecoder() map[string]jsoniter.ValDecoder {
 		jsoniter.MustGetKind(reflect2.TypeOf(HttpFarmSpecProbe{}).Type1()):       HttpFarmSpecProbeCodec{},
 		jsoniter.MustGetKind(reflect2.TypeOf(HttpRouteSpecAction{}).Type1()):     HttpRouteSpecActionCodec{},
 		jsoniter.MustGetKind(reflect2.TypeOf(TcpFarmSpecProbe{}).Type1()):        TcpFarmSpecProbeCodec{},
+		jsoniter.MustGetKind(reflect2.TypeOf(TcpRouteSpecAction{}).Type1()):      TcpRouteSpecActionCodec{},
 	}
 }
 
@@ -368,5 +370,84 @@ func (TcpFarmSpecProbeCodec) Decode(ptr unsafe.Pointer, iter *jsoniter.Iterator)
 		}
 	default:
 		iter.ReportError("decode TcpFarmSpecProbe", "unexpected JSON type")
+	}
+}
+
+// +k8s:deepcopy-gen=false
+type TcpRouteSpecActionCodec struct {
+}
+
+func (TcpRouteSpecActionCodec) IsEmpty(ptr unsafe.Pointer) bool {
+	return (*TcpRouteSpecAction)(ptr) == nil
+}
+
+func (TcpRouteSpecActionCodec) Encode(ptr unsafe.Pointer, stream *jsoniter.Stream) {
+	obj := (*TcpRouteSpecAction)(ptr)
+	var objs []TcpRouteSpecAction
+	if obj != nil {
+		objs = []TcpRouteSpecAction{*obj}
+	}
+
+	jsonit := jsoniter.Config{
+		EscapeHTML:             true,
+		SortMapKeys:            true,
+		ValidateJsonRawMessage: true,
+		TagKey:                 "tf",
+		TypeEncoders:           getEncodersWithout(jsoniter.MustGetKind(reflect2.TypeOf(TcpRouteSpecAction{}).Type1())),
+	}.Froze()
+
+	byt, _ := jsonit.Marshal(objs)
+
+	stream.Write(byt)
+}
+
+func (TcpRouteSpecActionCodec) Decode(ptr unsafe.Pointer, iter *jsoniter.Iterator) {
+	switch iter.WhatIsNext() {
+	case jsoniter.NilValue:
+		iter.Skip()
+		*(*TcpRouteSpecAction)(ptr) = TcpRouteSpecAction{}
+		return
+	case jsoniter.ArrayValue:
+		objsByte := iter.SkipAndReturnBytes()
+		if len(objsByte) > 0 {
+			var objs []TcpRouteSpecAction
+
+			jsonit := jsoniter.Config{
+				EscapeHTML:             true,
+				SortMapKeys:            true,
+				ValidateJsonRawMessage: true,
+				TagKey:                 "tf",
+				TypeDecoders:           getDecodersWithout(jsoniter.MustGetKind(reflect2.TypeOf(TcpRouteSpecAction{}).Type1())),
+			}.Froze()
+			jsonit.Unmarshal(objsByte, &objs)
+
+			if len(objs) > 0 {
+				*(*TcpRouteSpecAction)(ptr) = objs[0]
+			} else {
+				*(*TcpRouteSpecAction)(ptr) = TcpRouteSpecAction{}
+			}
+		} else {
+			*(*TcpRouteSpecAction)(ptr) = TcpRouteSpecAction{}
+		}
+	case jsoniter.ObjectValue:
+		objByte := iter.SkipAndReturnBytes()
+		if len(objByte) > 0 {
+			var obj TcpRouteSpecAction
+
+			jsonit := jsoniter.Config{
+				EscapeHTML:             true,
+				SortMapKeys:            true,
+				ValidateJsonRawMessage: true,
+				TagKey:                 "tf",
+				TypeDecoders:           getDecodersWithout(jsoniter.MustGetKind(reflect2.TypeOf(TcpRouteSpecAction{}).Type1())),
+			}.Froze()
+			jsonit.Unmarshal(objByte, &obj)
+
+			*(*TcpRouteSpecAction)(ptr) = obj
+		} else {
+			*(*TcpRouteSpecAction)(ptr) = TcpRouteSpecAction{}
+		}
+	default:
+		iter.ReportError("decode TcpRouteSpecAction", "unexpected JSON type")
 	}
 }

@@ -76,6 +76,10 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 		&TcpFarmServerList{},
 		&TcpFrontend{},
 		&TcpFrontendList{},
+		&TcpRoute{},
+		&TcpRouteList{},
+		&TcpRouteRule{},
+		&TcpRouteRuleList{},
 		&VrackNetwork{},
 		&VrackNetworkList{},
 	)

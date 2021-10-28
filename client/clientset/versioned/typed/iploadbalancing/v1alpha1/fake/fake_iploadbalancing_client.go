@@ -69,6 +69,14 @@ func (c *FakeIploadbalancingV1alpha1) TcpFrontends(namespace string) v1alpha1.Tc
 	return &FakeTcpFrontends{c, namespace}
 }
 
+func (c *FakeIploadbalancingV1alpha1) TcpRoutes(namespace string) v1alpha1.TcpRouteInterface {
+	return &FakeTcpRoutes{c, namespace}
+}
+
+func (c *FakeIploadbalancingV1alpha1) TcpRouteRules(namespace string) v1alpha1.TcpRouteRuleInterface {
+	return &FakeTcpRouteRules{c, namespace}
+}
+
 func (c *FakeIploadbalancingV1alpha1) VrackNetworks(namespace string) v1alpha1.VrackNetworkInterface {
 	return &FakeVrackNetworks{c, namespace}
 }

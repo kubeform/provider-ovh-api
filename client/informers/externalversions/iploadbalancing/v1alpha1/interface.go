@@ -44,6 +44,10 @@ type Interface interface {
 	TcpFarmServers() TcpFarmServerInformer
 	// TcpFrontends returns a TcpFrontendInformer.
 	TcpFrontends() TcpFrontendInformer
+	// TcpRoutes returns a TcpRouteInformer.
+	TcpRoutes() TcpRouteInformer
+	// TcpRouteRules returns a TcpRouteRuleInformer.
+	TcpRouteRules() TcpRouteRuleInformer
 	// VrackNetworks returns a VrackNetworkInformer.
 	VrackNetworks() VrackNetworkInformer
 }
@@ -107,6 +111,16 @@ func (v *version) TcpFarmServers() TcpFarmServerInformer {
 // TcpFrontends returns a TcpFrontendInformer.
 func (v *version) TcpFrontends() TcpFrontendInformer {
 	return &tcpFrontendInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+}
+
+// TcpRoutes returns a TcpRouteInformer.
+func (v *version) TcpRoutes() TcpRouteInformer {
+	return &tcpRouteInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+}
+
+// TcpRouteRules returns a TcpRouteRuleInformer.
+func (v *version) TcpRouteRules() TcpRouteRuleInformer {
+	return &tcpRouteRuleInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }
 
 // VrackNetworks returns a VrackNetworkInformer.

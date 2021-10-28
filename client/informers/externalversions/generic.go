@@ -129,6 +129,10 @@ func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Iploadbalancing().V1alpha1().TcpFarmServers().Informer()}, nil
 	case iploadbalancingv1alpha1.SchemeGroupVersion.WithResource("tcpfrontends"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Iploadbalancing().V1alpha1().TcpFrontends().Informer()}, nil
+	case iploadbalancingv1alpha1.SchemeGroupVersion.WithResource("tcproutes"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Iploadbalancing().V1alpha1().TcpRoutes().Informer()}, nil
+	case iploadbalancingv1alpha1.SchemeGroupVersion.WithResource("tcprouterules"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Iploadbalancing().V1alpha1().TcpRouteRules().Informer()}, nil
 	case iploadbalancingv1alpha1.SchemeGroupVersion.WithResource("vracknetworks"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Iploadbalancing().V1alpha1().VrackNetworks().Informer()}, nil
 
