@@ -90,7 +90,7 @@ func (r *TcpFarmServer) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range tcpfarmserverForceNewList {
+	for key, _ := range tcpfarmserverForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

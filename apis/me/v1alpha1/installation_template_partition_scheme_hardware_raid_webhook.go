@@ -88,7 +88,7 @@ func (r *InstallationTemplatePartitionSchemeHardwareRaid) ValidateUpdate(old run
 		return err
 	}
 
-	for key := range installationtemplatepartitionschemehardwareraidForceNewList {
+	for key, _ := range installationtemplatepartitionschemehardwareraidForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

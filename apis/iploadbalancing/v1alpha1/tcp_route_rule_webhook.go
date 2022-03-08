@@ -89,7 +89,7 @@ func (r *TcpRouteRule) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range tcprouteruleForceNewList {
+	for key, _ := range tcprouteruleForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

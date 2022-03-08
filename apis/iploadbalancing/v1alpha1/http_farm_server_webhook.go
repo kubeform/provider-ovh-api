@@ -90,7 +90,7 @@ func (r *HttpFarmServer) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range httpfarmserverForceNewList {
+	for key, _ := range httpfarmserverForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

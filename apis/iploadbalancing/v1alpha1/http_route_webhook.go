@@ -88,7 +88,7 @@ func (r *HttpRoute) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range httprouteForceNewList {
+	for key, _ := range httprouteForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

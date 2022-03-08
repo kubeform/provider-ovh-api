@@ -86,7 +86,7 @@ func (r *VrackNetwork) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range vracknetworkForceNewList {
+	for key, _ := range vracknetworkForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

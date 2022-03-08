@@ -88,7 +88,7 @@ func (r *InstallationTemplatePartitionSchemePartition) ValidateUpdate(old runtim
 		return err
 	}
 
-	for key := range installationtemplatepartitionschemepartitionForceNewList {
+	for key, _ := range installationtemplatepartitionschemepartitionForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false
