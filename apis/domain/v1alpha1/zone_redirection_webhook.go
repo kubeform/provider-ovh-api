@@ -88,7 +88,7 @@ func (r *ZoneRedirection) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range zoneredirectionForceNewList {
+	for key, _ := range zoneredirectionForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

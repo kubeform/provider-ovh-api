@@ -90,7 +90,7 @@ func (r *CephACL) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range cephaclForceNewList {
+	for key, _ := range cephaclForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

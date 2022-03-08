@@ -89,7 +89,7 @@ func (r *IpxeScript) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range ipxescriptForceNewList {
+	for key, _ := range ipxescriptForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

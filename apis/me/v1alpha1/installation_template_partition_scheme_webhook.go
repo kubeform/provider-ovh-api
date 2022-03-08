@@ -88,7 +88,7 @@ func (r *InstallationTemplatePartitionScheme) ValidateUpdate(old runtime.Object)
 		return err
 	}
 
-	for key := range installationtemplatepartitionschemeForceNewList {
+	for key, _ := range installationtemplatepartitionschemeForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

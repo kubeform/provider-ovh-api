@@ -88,7 +88,7 @@ func (r *TcpRoute) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range tcprouteForceNewList {
+	for key, _ := range tcprouteForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

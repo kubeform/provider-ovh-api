@@ -89,7 +89,7 @@ func (r *Iploadbalancing) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range iploadbalancingForceNewList {
+	for key, _ := range iploadbalancingForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

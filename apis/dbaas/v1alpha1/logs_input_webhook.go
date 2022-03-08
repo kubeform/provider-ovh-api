@@ -88,7 +88,7 @@ func (r *LogsInput) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range logsinputForceNewList {
+	for key, _ := range logsinputForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

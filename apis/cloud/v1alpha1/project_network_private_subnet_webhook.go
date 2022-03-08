@@ -95,7 +95,7 @@ func (r *ProjectNetworkPrivateSubnet) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range projectnetworkprivatesubnetForceNewList {
+	for key, _ := range projectnetworkprivatesubnetForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false
